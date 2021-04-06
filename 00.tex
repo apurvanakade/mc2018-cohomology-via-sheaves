@@ -1,0 +1,48 @@
+% !TEX root = index.tex
+\maketitle
+\tableofcontents
+\newpage
+
+\setcounter{section}{-1}
+\section{Introduction \& Motivation}
+\epigraph{In mathematics you don't understand things. You just get used to them.}{John von Neumann}
+
+Cohomology was introduced by Poincare in a series of papers named \emph{Analysis Situs} and now forms the basis of modern Algebraic Topology.
+To a topological space $X$ we can associate a sequence of vector spaces denoted
+\begin{align*}
+    \check H^i(X)
+\end{align*}
+for each $i \in \Z_{\ge 0}$ called it's \textbf{Cech Cohomology} (pronounced \emph{check cohomology}). In a very loose sense, the dimension of  $\check H^i(X)$ measures the $i^{th}$ dimensional holes in $X$.\\
+
+Why care about the $i^{th}$ dimensional holes? We can use these to rigorously distinguish between spaces. For example, most proofs of the fact that $\R^m$ is not homeomorphic\footnote{Homeomorphism is the isomorphism for topological spaces.} to $\R^n$ if $m \neq n$ use some cohomology computation. We'll also see that a torus $S^1 \times S^1$ has two \emph{1-dimensional holes} which distinguishes it from a sphere $S^2$ which has none.
+
+\begin{thm}
+  Two topological spaces $X$, $Y$ are homeomorphic only if
+  \begin{align*}
+    \check H^i(X) \cong \check H^i(Y)
+  \end{align*} for all non-negative integers $i$.
+\end{thm}
+\begin{remark}
+  The above statement is not an \emph{if and only if} statement. The other direction is easily shown to be false. You'll be able to come up with examples by yourself in a couple of days.
+\end{remark}
+
+Computing the cohomology requires multiple steps. The goal of this class is to develop the relevant machinery and actually do some cohomology computations.
+\begin{align*}
+ \xymatrix@R-2pc{
+ X \ar@{~>}[r] & \U \ar@{~>}[r] & \L^\bullet(\U) \ar@{~>}[r] & \check H^*(X)\\
+ \mbox{Topological Space} & \mbox{Good cover of } X & \mbox{Cech Complex of } \U & \mbox{Cech Cohomology of } X
+ }
+\end{align*}
+
+\noindent \textbf{Note:} The number of stars (*) on the problems indicate their difficulty level. The non-starred marked problems are compulsory, the starred problems are optional.
+
+% We'll gradually define Cech cohomology. The strategy is the following.
+% \begin{enumerate}
+% 	\item For a space $ X$, find a good open cover $ \U$
+% 	\item Find the Cech complex (to be defined) $ \L^\bullet(\U)$ associated $ \U$
+% 	\item Find the cohomology of the complex $H^*(\L^\bullet(\U))$ which then equals the singular cohomology of the space $H^*(X, \F)$.
+% \end{enumerate}
+%
+% \begin{remark}
+% 	When $X$ is a nice enough space (which includes most spaces you can think of) the Cech cohomology $\check H^i(X; \F)$ equals another purely topological invariant of $X$ called the \textbf{singular homology}. And thus Cech cohomology provides a purely algebraic way of computing a topological invariant.
+% \end{remark}

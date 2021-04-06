@@ -1,0 +1,179 @@
+% !TEX root = index.tex
+
+
+\section{Sheaves}
+\epigraph{Out of nothing I've created a strange new universe.}{Bolyai (MC Tagline)}
+
+Why do the cohomologies compute the ``number of holes in a space''? This question is difficult to answer as for general spaces we cannot even answer the question ``what does it mean to have an $n$ dimensional hole''. Instead, we can see that for simple spaces like graphs, surfaces, $n$-dimensional spheres, cohomologies indeed compute the $n$ dimensional holes in the space. And so, for spaces that we cannot visualize well, we simply adapt Cech cohomology as an algebraic substitute for the number of holes in a space.
+
+\begin{figure}[H]
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		$X$ & $\dim \check H^0(X)$ & $\dim \check H^1(X)$ & Other non-zero cohomologies\\\hline
+		Any contractible Space & 1 & 0 & 0 \\
+		$d$ points & d & 0 & 0\\
+		$S^1$ & 1 & 1 & 0 \\
+		$S^1 \vee S^1$ & 1 & 2 & 0 \\
+		$S^1 \sqcup S^1$ & 2 & 2 & 0 \\
+		Connected Graph $G$ & 1 & number of cycles & 0 \\
+		 $ \R^2 \setminus \{(0,0), (1,0), \dots, (k,0) \}$  & 1 & k+1 & 0 \\
+		 $ S^2 $ minus a point & 1 & 0 & 0 \\
+		 $ S^2 $ minus 2 points & 1 & 1 & 0 \\
+		 $ S^2 $ & 1 & 0 & $\dim \check H^2(X)=1$  \\
+		 $ S^1 \times S^1 $ & 1 & 2 & $\dim \check H^2(X)=1$  \\
+		 Klein Bottle & 1 & 2 & $\dim \check H^2(X)=1$  \\
+		 Projective Space & 1 & 1 & $\dim \check H^2(X)=1$  \\
+		 $g$ holed surface & 1 & 2g & $\dim \check H^2(X)=1$  \\
+		 $S^n$ & 1 & 0 & $\dim \check H^n(S^n)=1$  \\\hline
+	\end{tabular}
+	\caption{Which of the above spaces are not homeomorphic to each other?}
+\end{figure}
+
+We were able to compute cohomology groups using just locally constant functions. It's natural to ask whether one can compute deeper properties of spaces (not just holes) using more complicated functions. And indeed this is the case; the most general setting in which Cech cohomologies can be computed is that of a sheaf and different sheaves allow us to understand different aspects of spaces\\
+
+\noindent	\textbf{Note: } I'm including this section for the sake of completeness. Knowing what a sheaf is does not help you with anything else. Knowing lots of other maths helps you understand sheaves better. \\
+
+In this section, $X$ will always stand for a topological space.
+
+\begin{definition}
+	A \textbf{presheaf} $\P$ on a space $X$ valued in vector spaces, is a pair $(\P, \mor)$ where:
+	\begin{enumerate}
+		\item $\P$ is an assignment
+		\begin{align*}
+			 U \mapsto \P(U)
+		\end{align*}
+		which assigns a vector space $\P(U)$ for each open subset $ U \subseteq X$.
+		\item $\mor$ is a collection of linear transformations
+		\begin{align*}
+			\mor_{V \rightarrow U}:\P(V) \rightarrow \P(U)
+		\end{align*}
+		for each pair of inclusions $U \subseteq V$ where $U, V$ are open subsets of $X$. We want the maps $\mor_{V \rightarrow U}$ to satisfy the following conditions:
+		      \begin{itemize}
+			      \item For each open subset $ U $, $ \mor_{U \rightarrow U}$ is the identity map.
+			      \item For each inclusion of open subsets $ U \subseteq V \subseteq W$
+						\begin{align*}
+							\mor_{V\rightarrow U} \circ \mor_{W \rightarrow V} = \mor_{W \rightarrow U}
+							&&
+							\xymatrix{
+				      \P(W) \ar@/_1pc/_{\mor_{V \rightarrow U} \circ \mor_{W \rightarrow V}= \mor_{W \rightarrow U}}[rrrr] \ar^{\mor_{W \rightarrow V}}[rr] && \P(V) \ar^{ \mor_{V\rightarrow U}}[rr] && \P(U)
+				      }
+						\end{align*}
+		      \end{itemize}
+	\end{enumerate}
+\end{definition}
+
+Recall that $\L(U)$ is the space of continuous maps $U \rightarrow \F$ and for $U \subseteq V$ the morphism $\res_{V \rightarrow U}$ is the restriction of functions $f \mapsto f|_{U}$. $\L$ is called the \textbf{constant sheaf} on $X$.
+\begin{ques}
+	Show that $(\L, \res)$ defines a presheaf over $X$ valued in $\F$-vector spaces.
+\end{ques}
+There is nothing special about $\F$. We can replace $\F$ with any space and get the corresponding presheaf.
+\begin{definition}
+	\label{def:presheaf_Y}
+	For a topological space $Y$ let $\L_Y(X)$ denote the space of continuous maps $X \rightarrow Y$ (this is just a set and not a vector space) and for $U \subseteq V$ the morphism $\res_{V \rightarrow U}$ is the restriction of functions $f \mapsto f|_{U}$.
+\end{definition}
+\begin{ques}
+	Show that $(\L_Y, \res)$ defines a presheaf over $X$ valued in sets.
+\end{ques}
+Finally, we can let the target vary with each point and get the most general notion of a function.
+\begin{definition}
+	Given a map $\phi:Z \rightarrow X$ a \textbf{section} of $\phi$ over a subset $U \subseteq X$ is a map $s: U \rightarrow Z$ satisfying $\phi \circ s(u) = u$ for all $u \in U$.
+	\begin{align*}
+		\xymatrix{
+			& Z \ar^\phi[d] \\
+			U \ar@{^{(}->}[r] \ar^s[ru] & X
+		}
+	\end{align*}
+	Let $\L_\phi(U)$ denote the set of sections of $\phi$ over $U$  and for $U \subseteq V$ the morphism $\res_{V \rightarrow U}$ is the restriction of sections $f \mapsto f|_{U}$.
+\end{definition}
+
+\begin{ques}
+	\begin{enumerate}
+		\item Show that $(\L_\phi, \res)$ is a presheaf over $X$.
+		\item Find a $\phi$ such that $\L_\phi = \L_Y$ where $\L_Y$ is as defined in \ref{def:presheaf_Y}.
+		\item Describe the presheaf $\L_\phi$ when $\phi: Z \rightarrow X$ is an injection.
+		\item Describe the presheaf $\L_\phi$ when $\phi: Z \rightarrow X$ is a surjection.
+	\end{enumerate}
+\end{ques}
+
+\begin{ques}
+	Define $(\mathcal{Q}, \mor)$ as
+	\begin{align*}
+		\mathcal{Q}(U) &= \R\\
+		\mor_{V \rightarrow U} &= \mbox{ multiplication by }1 \mbox{ for any } U \subseteq V
+	\end{align*}
+	\begin{enumerate}
+		\item Show that this is  presheaf.
+		\item If we instead have $\mor_{V \rightarrow U} = $ multiplication by 0, is it a presheaf?
+		\item If we instead have $\mor_{V \rightarrow U} = $ multiplication by 0 if $V \neq U$, multiplication by 1 if $V = U$, is it a presheaf?
+	\end{enumerate}
+\end{ques}
+
+\begin{ques}
+	Let $X = \R^1$. Define
+	\begin{align*}
+		\mathcal{B}(U) = \{ f : U \rightarrow \R \mbox{ continuous such that } |f(x)| < M \mbox{ for some $M \in \R$ and every } x \in U \}
+	\end{align*}
+	and the $\res_{V \rightarrow U} $ is the restriction of functions. Is $(\mathcal{B},\res)$ a presheaf?
+\end{ques}
+
+\begin{ques}
+	Let $p$ be a point in $X$. Define
+	\begin{align*}
+		\mathcal{S}(U) = \begin{cases}
+			 \R	& \mbox{ if } p \in U \\
+			 0 & \mbox{ otherwise}
+		\end{cases}
+	\end{align*}
+	Define $\mor$ such that $(S,\mor)$ becomes a presheaf. This is the \textbf{skyscraper sheaf} over $p$.
+\end{ques}
+
+\begin{definition}
+	For a presheaf $\P$ the elements of $\P(U)$ are called the \textbf{sections} of $\P$ over $U$.
+\end{definition}
+\begin{definition}
+	A \textbf{sheaf} on $ X$ is a presheaf $ \P$ that further satisfies the following conditions. Let $V$ be an open subset of $X$. Let $ \U = \{U_i\}_{i \in \aleph}$ (here we do not require $\aleph$ to be finite) be a cover of $ V$.
+	\begin{enumerate}
+		\item \textit{(Identity axiom)} If a section $s \in \P(V)$ is such that $ \mor_{U \rightarrow U_i}(s) = 0$ for all $ U_i$ then $ s = 0$.
+		\item \textit{(Gluing axiom)} If there exists a collection of sections $ s_i \in \P(U_i)$ such that for all $ i,j \in I$ the intersections are compatible $$ \mor_{U_i \rightarrow U_i \cap U_j} (s_i) = \mor_{U_j \rightarrow U_i \cap U_j} (s_j)$$ then there exists a section $ s \in \P(V)$ such that $$ s_i = \mor_{V \rightarrow U_i} (s) $$
+	\end{enumerate}
+\end{definition}
+These two axioms ensure that sections of sheaves behave like functions. The identity axiom is saying that if two functions agree on all the points then they must be the same functions. The gluing axiom allows us to create piece-wise functions.
+% The identity axiom is a uniqueness axiom. It ensures that there if two sections look the same when restricted to small sets, then the two sets should have been the same to begin with.
+%
+% The gluing axiom is a constructive axiom. It is saying that you can glue sections on small open subsets to get a section on a large open subset as long as the sections on the smaller sets agree on intersections.
+
+\begin{ques}
+	Determine which of the presheaves defined in the previous problems are also sheaves.
+\end{ques}
+\begin{remark}
+	Every sheaf (defined below) is of the type $\L_\phi$ for some $\phi$. The space $Z$ is called the \'etal\'e space of $\L_\phi$. This is not true for presheaves which can get weird.
+\end{remark}
+
+The difference between presheaves and sheaves is that, thanks to the gluing axiom, sheaves are determined by the sections on smaller and smaller subsets.
+\begin{ques}
+	Let $X = \{-1 , 1\}$. Let $\P$ be presheaf on $X$ valued in vector spaces.
+	\begin{enumerate}
+		\item If $\P$ is a sheaf find $\P(X)$ in terms of $\P(\{-1\})$ and $\P(\{1\})$.
+		\item If $\P$ is just a presheaf what is the relationship between $\P(X)$, $\P(\{-1\})$ and $\P(\{1\})$?
+	\end{enumerate}
+\end{ques}
+
+The Cech cohomology for sheaves is a direct generalization of the one we defined for $\L$.
+\begin{definition}
+	If $\U$ is a cover of $X$ and $\P$ is a sheaf on $X$ valued in vector spaces over $\F$ then the \textbf{Cech complex} of $\P$ on $\U = \{ U_i \}_{i \in \aleph}$ is defined as :\\ the spaces are
+	  	\begin{align*}
+	  		\P^k := \prod_{I \subseteq \aleph, \: |I| = k+1} \P(U_I)
+	  	\end{align*}
+	and the differential maps $d^k$ are constructed from the maps $\mor_{U_I \rightarrow U_J}$ with $J \subseteq \aleph, |J| = k+2$.
+
+		The \textbf{Cech cohomology} of the sheaf $\P$ on the cover $\U$, denoted $H^*(\U, \P)$ is defined as the cohomology of this cochain complex.
+\end{definition}
+\begin{remark}
+	The first major difference is that the indexing set $\aleph$ is no longer required to be finite. There are no finiteness conditions on the sets $\P(U)$ either so we need to replace direct sums with direct products.
+
+	The second major difference is that for general sheaves it is no longer true that all good covers give the same cohomologies and so we need to keep track of the cover.
+\end{remark}
+
+
+We've only explored the cohomology of one simple sheaf, the constant sheaf.
+It is hard to describe what cohomologies compute for general sheaves. Sheaves provide the language for describing complicated structures in algebra and almost every important algebraic invariant is a cohomology of some sheaf.

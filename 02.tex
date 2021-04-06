@@ -1,0 +1,259 @@
+% !TEX root = index.tex
+
+\section{The Cocomplex World of Cochain Complexes}
+\epigraph{The introduction of the digit 0 or the group concept was general nonsense too, and mathematics was more or less stagnating for thousands of years because nobody was around to take such childish steps.}{Grothendieck}
+\begin{align*}
+ \xymatrix@R-2pc{
+ \U \ar@{~>}[r] & \L^\bullet(\U)\\
+ \mbox{Good cover of } X & \mbox{Cech Complex of } \U }
+\end{align*}
+To be able to use algebraic techniques, we need a way to convert topological information into algebraic information. We'll do this using locally constant functions and of course, linear algebra. All our vector spaces will be over the base field $ \F = \{0, 1\}$ i.e. all the scalars are either 0 or 1. This is mainly because $-1 = 1$ in $ \F$
+and hence we do not have to worry about signs.\\
+
+\noindent \textbf{Notation:} $V = \F \langle v_1, \dots, v_n \rangle = \F \langle \mathcal{B} \rangle$ stands for ``$V$ is a vector space over $\F$ with basis $ \mathcal{B} = \{ v_1, \dots, v_n\}$''.
+  \begin{ques}
+      Show that the elements of $ \F \langle \mathcal{B} \rangle$ can be identified with subsets of $\mathcal{B}$ and hence as a set $V$ has size $2^{\lvert\mathcal{B}\rvert}$, where $\lvert \mathcal{B} \rvert$ denotes the size of $\mathcal{B}$.
+  \end{ques}
+
+\subsection{Locally Constant Functions}
+\begin{definition}
+	For a topological space $X$, define the vector space of \textbf{locally constant functions}, denoted $\L(X)$, to be the space of continuous maps from $X$ to $\F$.
+	\begin{align*}
+		\L(X) := \{ \: f: X \rightarrow \F \: \mbox{ continuous } \}
+	\end{align*}
+  Here we are thinking of $\F$ as a topological space with 2 points.
+\end{definition}
+\begin{ques}
+  Show that $\L(X)$ is naturally a vector space over $\F$.
+\end{ques}
+\begin{ques}
+  Show that if $X$ is connected then every continuous function $f: X \rightarrow \F$ is a constant function and hence $\L(X) \cong \F$ as a vector space.
+\end{ques}
+\begin{ques}
+	What is $\L(\phi)$ where $\phi$ is the empty set (which is a legit topological space)?
+\end{ques}
+\noindent Let $X^1, X^2, \dots, X^k$ be the connected components of $X$. Define $k$ functions $\delta^1, \delta^2, \dots, \delta^k : X \rightarrow \F$ as
+\begin{align*}
+  \delta^i(x) = \begin{cases}
+    1 & \mbox{ if $x \in X^i$} \\
+    0 & \mbox{ otherwise}
+\end{cases}
+\end{align*}
+for $1 \le i \le k$.\\
+\begin{ques}
+	Show that
+	\begin{align*}
+		\L(X) = \F \langle \delta^1, \delta^2, \dots, \delta^k \rangle
+	\end{align*}
+	and hence $\dim \L(X) = k = \pi_0(X)$.
+\end{ques}
+\begin{ques}*
+  Show that the above statement is false if $X$ has infinitely many connected components, for example, if $X$ is the set of integers.
+\end{ques}
+\begin{definition}
+	With the notation as above, we call $\delta^1, \delta^2, \dots, \delta^k$ the \textbf{canonical basis} for $\L(X)$.
+\end{definition}
+
+The following exercise is extremely important, make sure you understand it well.
+\begin{ques} \label{q:restrictions}
+  For an inclusion of topological spaces $X \subseteq Y$,
+	\begin{enumerate}
+		\item We can restrict a function $f: Y \rightarrow \F$ to the subspace $X$ and get a function $f|_{X} : X \rightarrow \F$. Show that this induces a linear transformation
+    \begin{align*}
+			\res_{Y \rightarrow X}: \L(Y) \rightarrow \L(X)
+		\end{align*}
+    \item Explicitly compute the matrix for $\res_{Y \rightarrow X}$ in the canonical bases when $Y = \R$ and $X = \{ -1, 1\}$.
+    \item Explicitly compute the matrix for $\res_{Y \rightarrow X}$ in the canonical bases when $Y = \R^2 $ minus the $y$-axis and $X = \{ (-1,0), (1,0), (2,0)\}$.
+    \item* More generally, show that if $X^i$ and $Y^j$ are the connected components of $X$ and $Y$ respectively, for $1 \le i \le k$ and $1 \le j \le l$, then in the canonical basis $\res_{Y \rightarrow X}$ is a $k \times l$ matrix whose entry in the $i^{th}$ row and $j^{th}$ column is given by
+    \begin{align*}
+      [\res_{Y \rightarrow X}]_{i,j} &= \begin{cases}
+        1 & \mbox{ if } X^i \subseteq Y^j \\
+        0 & \mbox{ if } X^i \not \subseteq Y^j
+    \end{cases}
+    \end{align*}
+		% \item Show that $\res_{U \rightarrow U}$ is the identity transformation.
+		% \item Show that $\res_{V \rightarrow U} \circ \res_{W \rightarrow V} = \res_{W \rightarrow U}$.
+    \end{enumerate}
+\end{ques}
+
+
+
+
+
+
+
+\newpage
+\subsection{Cochain Complexes}
+The various vector spaces $\L(U_I)$ naturally assemble themselves into a cochain complex, we'll get to that in the next section. First we need to understand what cochain complexes are.
+\begin{definition}
+  A \textbf{cochain complex} $ \V^\bullet$ consists of the following data:
+  \begin{align*}
+    &\xymatrix{0 \ar[r] & \V^0 \ar[r] & \cdots \ar[r] & \V^{i-1} \ar^-{d^{i-1}}[r] & \V^{i} \ar^{d^{i}}[r]& \V^{i+1} \ar[r] & \cdots \ar[r] & \V^n \ar[r] &0}
+  \end{align*}
+  \begin{enumerate}
+    \item A vector space $ \V^i$ for each $ i \in \Z$, with $ \V^i \neq 0$  only if $ 0 \le i \le n$ for some positive integer $ n$.
+    \item For each $ i \in \Z$ a linear transformation $ d^i: \V^i \rightarrow \V^{i+1}$ that satisfies
+    \begin{align*}
+      d^{i} \circ d^{i-1} = 0
+      &&
+      \xymatrix{
+      \V^{i-1} \ar@/_1pc/_{d^{i} \circ d^{i-1} = 0}[rrrr] \ar^{d^{i-1}}[rr] && \V^i \ar^{d^{i}}[rr] && \V^{i+1}
+      }
+    \end{align*}
+  \end{enumerate}
+\end{definition}
+
+\begin{ques}
+  Show that $ \im d^{i-1} \subseteq \ker d^{i}$.
+\end{ques}
+
+\begin{definition}
+  The $ i^{th}$ \textbf{cohomology} of $ \V^\bullet$ is the quotient vector space
+    \begin{align*}
+      H^i(\V) := \ker d^{i} / \im d^{i-1}
+    \end{align*}
+\end{definition}
+\begin{remark}
+  This is well-defined because of the previous exercise. We'll only be interested in the dimensions
+  \begin{align*}
+    \dim H^i(\V) = \dim \ker d^{i} - \dim \im d^{i-1}
+  \end{align*}
+\end{remark}
+\noindent \textbf{Convention:} Even though in a cochain complex there is a vector space $ \V^i$ for all integers $ i$ it is a common convention to explicitly define $ \V^i$ only where it is non-zero, it is understood that the rest of the $ \V^i$ are all 0. The first non-zero vector space in the cochain complex is understood to be $ \V^0$ unless otherwise specified.
+\begin{ques}
+  A vector space $A$ can be thought of as a cochain complex as
+  \begin{align*}
+    \xymatrix{ \V^\bullet= 0 \ar[r] & A \ar[r] & 0}
+  \end{align*}
+  What are the cohomologies $ H^i(\V)$, for $ i \in \Z$?
+\end{ques}
+
+\begin{ques}
+  A linear transformation $ f:A \rightarrow B$ can be thought of as a cochain complex as
+  \begin{align*}
+    \xymatrix{ \V^\bullet= 0 \ar[r] & A \ar^f[r] & B \ar[r] & 0}
+  \end{align*}
+  What are the cohomologies $ H^i(\V)$, for $ i \in \Z$?
+\end{ques}
+For the following exercises it'll be useful to invoke the {\bf Rank-Nullity / Dimension Theorem}.
+\begin{ques} Verify that the following are cochain complexes and compute their cohomologies.
+  \begin{enumerate}
+    \item $ \xymatrix{0 \ar[r] & \F \ar^{0}[r] & \F \ar^{0}[r] & \F \ar[r] & 0 }  $
+    \item $ \xymatrix{0 \ar[r] & \F \ar^{1}[r] & \F \ar^{0}[r] & \F \ar[r] & 0 }  $
+    \item $ \xymatrix{0 \ar[r] & \F \ar^{0}[r] & \F \ar^{1}[r] & \F \ar[r] & 0 }  $
+    \item $ \xymatrix{0 \ar[r] & \F \ar^{\begin{bmatrix}1 \\ 1 \end{bmatrix}}[rr]  && \F^2  \ar^{\begin{bmatrix}1 & 1 \end{bmatrix}}[rr] && \F \ar[r] & 0 }  $
+  \end{enumerate}
+\end{ques}
+
+\begin{ques} Compute the cohomologies of the following cochain complexes.
+  \begin{enumerate}
+    \item $ \xymatrix{0 \ar[r] & \F^2 \ar^{\begin{bmatrix}1 & 1 \\ 1 & 1 \\ 1 & 1 \end{bmatrix}}[rr] && \F^3 \ar[r] & 0 } \qquad $ (this is computing $\check H^* (S^1 \vee S^1)$).
+    \item $ \xymatrix{0 \ar[r] & \F^3 \ar^{\begin{bmatrix}1 & 1 & 0\\ 1 & 0 & 1 \\ 0 & 1 & 1 \end{bmatrix}}[rr] && \F^3 \ar^{\begin{bmatrix}1 & 1 & 1\\ 1 & 1 & 1 \end{bmatrix}}[rr] && \F^2 \ar[r] & 0 } \qquad $ (this is computing $\check H^* (S^2)$).
+  \end{enumerate}
+\end{ques}
+
+\begin{ques}
+  Given $\xymatrix{ \V^\bullet= 0 \ar[r] & A \ar^f[r] & B \ar^g[r] &  C \ar[r] & 0}$
+  \begin{enumerate}
+    \item Under what conditions on $ f,g$ is $ \V^\bullet$ a cochain complex.
+    \item Under what conditions on $ f,g$ is $ H^i(\V) = 0$ for all $ i$. In this case, we say that $ \V^\bullet$ is a \textbf{short exact sequence}.
+  \end{enumerate}
+\end{ques}
+
+\begin{definition}
+  More generally, a cochain complex $ \V^\bullet$ is said to be \textbf{exact} (or \textbf{long exact}) if $H^i(\V) = 0$ for all $ i$.
+\end{definition}
+\newpage
+
+\subsection*{Optional Problems}
+\begin{definition}
+  Define the \textbf{Euler characteristic} of a cochain complex to be
+  \begin{align*}
+    \chi(\V)
+    &= \sum_{i \in \Z} (-1)^i \dim H^i(\V) \\
+    &= \dim H^0(\V) - \dim H^1(\V) +  \dim H^2(\V) \pm \cdots + (-1)^n \dim  H^n(\V)
+  \end{align*}
+\end{definition}
+% \begin{ques} $ $
+%   \begin{enumerate}
+%     \item Show that if $ \V^\bullet$ is exact then $ \chi(\V) = 0$.
+%     \item Find an example of a cochain complex $ \V^\bullet$ which is not exact but for which $ \chi(\V) = 0$.
+%   \end{enumerate}
+% \end{ques}
+
+\begin{ques}$ $
+  \begin{enumerate}
+    \item Express the Euler characteristic in terms of the $ \dim \ker(d^i)$ and $ \dim \im(d^i)$ for $i \in \Z$.
+    \item Show that
+      \begin{align*}
+        \chi(V) = \sum_{i \in \Z} (-1)^i \dim \V^i
+      \end{align*}
+  \end{enumerate}
+  \end{ques}
+  \noindent Thus the Euler characteristic can be computed using the dimensions of the vector spaces of the original cochain complex, but it is really an invariant of the underlying cohomology!!! \\\\
+\begin{ques}*
+  The direct sum of cochain complexes $(\V_1 \oplus \V_2)^\bullet$ is defined as
+  \begin{align*}
+    (\V_1 \oplus \V_2)^i := \V_1^i \oplus \V_2^i
+  \end{align*}
+  and the differential is defined as
+  \begin{align*}
+    d^i := d_1^i \oplus d_2^i
+  \end{align*}
+  % \begin{align*}
+  %   &\xymatrix{ \cdots \ar[r] & \V_1^{i-1} \oplus \V_2^{i-1} \ar^-{d_1^{i-1} \oplus d_2^{i-1}}[rr] && \V_1^{i} \oplus \V_2^{i} \ar^{d_1^{i} \oplus d_2^{i}}[rr]&& \V_1^{i+1} \oplus \V_2^{i+1} \ar[r] & \cdots}
+  % \end{align*}
+  Find $H^*(\V_1 \oplus \V_2)$ in terms of $H^*(\V_1)$ and $H^*(\V_2)$.
+\end{ques}
+
+\begin{ques}***
+  The tensor product $(\V_1 \otimes \V_2)^\bullet$ of two cochain complexes $\V_1^\bullet$, $\V_2^\bullet$ is defined as
+  \begin{align*}
+    (\V_1 \otimes \V_2)^k := \bigoplus \limits_{i + j = k} \V_1^i \otimes \V_2^j
+  \end{align*}
+  and the differential is defined as
+  \begin{align*}
+    d^k := \bigoplus \limits_{i + j = k} d_1^i \otimes d_2^j
+  \end{align*}
+  Find $H^*(\V_1 \otimes \V_2)$ in terms of $H^*(\V_1)$ and $H^*(\V_2)$.
+\end{ques}
+\newpage
+\begin{ques}***
+  A \textbf{morphism of cochain complexes} $\phi: \V_1^\bullet \rightarrow \V_2^\bullet$ is a collection of maps $ \phi: \V_1^i \rightarrow \V_2^i$ for each $ i \in \Z$ such that the following diagram commutes
+  \begin{align*}
+    \xymatrix{
+    \V_2^i \ar^-{d}[r]  & \V_2^{i+1}  \\
+    \V_1^i \ar^-{d}[r] \ar_{\phi}[u] & \V_1^{i+1} \ar^{\phi}[u]
+    }
+  \end{align*}
+  \begin{enumerate}
+    \item Show that a morphism $\phi: \V_1^\bullet \rightarrow \V_2^\bullet$ between cochain complexes naturally induces a map between cohomologies $\phi^*: H^i(\V_1) \rightarrow H^i(\V_2)$, for all $ i \in Z$.
+    \item Given two morphisms $\phi_1: \V_1^\bullet \rightarrow \V_2^\bullet$ and $\phi_2: \V_2^\bullet \rightarrow \V_3^\bullet$, show that their composition $\phi_2 \circ \phi_1: \V_1^\bullet \rightarrow \V_3^\bullet$ is also a morphism of cochain complexes. Further show that $ (\phi_2 \circ \phi_1)^* = \phi_2^* \circ \phi_1^*$.
+  \end{enumerate}
+\end{ques}
+
+\begin{ques}**
+  A cochain complex of cochain complexes (i.e. each $\V^i$ is itself a cochain complex and the differentials $d^i$ are morphisms of cochain complexes) is called a \textbf{double complex}. Unravel this description of a double complex and describe it more explicitly as a grid of vector spaces.
+\end{ques}
+
+\iffalse
+\begin{ques}[Snake Lemma]**
+  Show that a morphism $ \phi$ between short exact sequences
+    \begin{align}
+      \label{eq:double_complex}
+      \xymatrix{
+         0 \ar[r] & \V_1^0 \ar^{\phi^0}[d] \ar[r] & \V_1^1 \ar^{\phi^1}[d] \ar[r] & \ar^{\phi^2}[d] \V_1^2 \ar[r] & 0 \\
+         0 \ar[r] & \V_2^0 \ar[r] & \V_2^1 \ar[r] &  \V_2^2 \ar[r] & 0
+      }
+    \end{align}
+    induces a natural exact sequence (not a full cochain complex)
+    \begin{align}
+      \label{eq:snake_lemma}
+      \xymatrix{\ker \phi^0 \ar[r] & \ker \phi^1 \ar[r] & \ker \phi^2 \ar[r] & \coker \phi^0 \ar[r] &\coker \phi^1 \ar[r] &\coker \phi^2 }
+    \end{align}
+    (Recall the cokernel of a map $ f:A \rightarrow B$ is $ B/(\im f)$.) This sequence does not naturally extend to a full cochain complex.
+\end{ques}
+\begin{remark}
+  Note that \eqref{eq:double_complex} is a double complex which gives rise to the exact sequence \eqref{eq:snake_lemma}. Larger double complexes give rise to more complicated structures called \textbf{spectral sequences}.
+\end{remark}
+\fi
